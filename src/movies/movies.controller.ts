@@ -8,33 +8,32 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { Movie } from './entities/movie.entities';
+import { MoviesService } from './movies.service';
 
 @Controller('movies')
 export class MoviesController {
-  @Get()
-  getAll() {
-    return 'This will return all movies';
-  }
+  // controller - Service 연결하는 부분
+  constructor(private readonly moviesService: MoviesService) {}
 
-  // search가 :id 밑에 있으면 id = 'search'로 판단
-  @Get('search')
-  serach(@Query('year') serachingYear: string) {
-    return `We are searching for a movie made after: ${serachingYear}`;
+  @Get()
+  getAll(): Movie[] {
+    return this.moviesService.getAll();
   }
 
   @Get(':id')
-  getOne(@Param('id') movieId: string) {
-    return `This will return one movie with the id: ${movieId}`;
+  getOne(@Param('id') movieId: string): Movie {
+    return this.moviesService.getOne(movieId);
   }
 
   @Post()
   create(@Body() movieData) {
-    return movieData;
+    return this.moviesService.create(movieData);
   }
 
   @Delete(':id')
   remove(@Param('id') movieId: string) {
-    return `This will delete a movie: ${movieId}`;
+    return this.moviesService.deleteOne(movieId);
   }
 
   // 일부분만 업데이트 할 때
