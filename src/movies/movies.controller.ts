@@ -6,9 +6,9 @@ import {
   Param,
   Patch,
   Post,
-  Query,
 } from '@nestjs/common';
 import { CreateMovieDto } from './dto/create-movie.dto';
+import { UpdateMovieDto } from './dto/update-movie.dto';
 import { Movie } from './entities/movie.entities';
 import { MoviesService } from './movies.service';
 
@@ -40,7 +40,7 @@ export class MoviesController {
   // 일부분만 업데이트 할 때
   // express와 다른 점은 json으로 받기 용이하다
   @Patch(':id')
-  path(@Param('id') movieId: number, @Body() updateData) {
+  path(@Param('id') movieId: number, @Body() updateData: UpdateMovieDto) {
     return this.moviesService.update(movieId, updateData);
   }
 }
