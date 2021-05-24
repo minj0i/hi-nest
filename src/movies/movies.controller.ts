@@ -40,9 +40,6 @@ export class MoviesController {
   // express와 다른 점은 json으로 받기 용이하다
   @Patch(':id')
   path(@Param('id') movieId: string, @Body() updateData) {
-    return {
-      updatedMovie: movieId,
-      ...updateData,
-    };
+    return this.moviesService.update(movieId, updateData);
   }
 }
